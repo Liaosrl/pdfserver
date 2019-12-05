@@ -29,13 +29,12 @@ server.config['SECRET_KEY']=server.secret_key
 server.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///./pdftool_users.db'
 server.config.update(dict(
     DEBUG=False,
-    #SERVER_NAME = '0.0.0.0:80',
     MAIL_SERVER = 'smtp.gmail.com',
     MAIL_PORT = 465,
     MAIL_USE_SSL = True,
-    MAIL_USERNAME = "pdftoolse6770@gmail.com",
+    MAIL_USERNAME = "youremail@xxx.com",
     MAIL_PASSWORD = "******",
-    MAIL_DEFAULT_SENDER = 'pdftoolse6770@gmail.com',
+    MAIL_DEFAULT_SENDER = 'default mail sender',
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
 ))
 
