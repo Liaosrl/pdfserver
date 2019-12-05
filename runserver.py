@@ -1,6 +1,6 @@
 from gevent.pywsgi import WSGIServer
 import pdfserver_auth
-from pdfserver_auth import server,clean
+from pdfserver import server,clean
 import _thread
 import logging 
 from logging.handlers import RotatingFileHandler
