@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<!--
+	Dimension by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" href="/static/css/main.css" />		
+	</head>
+	<body>
+        <div id="wrapper">                
+                <h1 class="major">PDFTOOL</h1>
+                <h3>Use link below to confirm your email.</h3>
+                <p>{{ url_for('confirm',token=token,_external=True) }}</p>
+        </div>
+        <!-- Footer -->
+        <footer id="footer">
+            <p class="copyright"> Contact us: sl4402@columbia.edu</p>
+        </footer>
+    </body>
+</html>

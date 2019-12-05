@@ -1,0 +1,302 @@
+<!DOCTYPE HTML>
+<!--
+	Dimension by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>PDFTOOL</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+        <link rel="stylesheet" href="/static/css/main.css" />
+        <link rel="stylesheet" href="/static/css/dropzone.css" />
+        <link rel="stylesheet" href="/static/css/modify-dropzone.css" />
+		<noscript><link rel="stylesheet" href="/static/css/noscript.css" /></noscript>
+	</head>
+	<body>
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<div class="content">
+							<div class="inner">
+								<h1>PDFTOOL</h1>
+								<a href="#Login">Login</a> <a href="#Signup">Signup</a> <a href="{{ url_for('logout') }}">Logout</a>
+							</div>
+						</div>
+						<nav>
+							<ul>
+								<li><a href="#Merge">Merge</a></li>
+								<li><a href="#Split">Split</a></li>
+								<li><a href="#Img2PDF">Img 2 PDF</a></li>
+								<li><a href="#Addimg">Add img</a></li>
+								<li><a href="#Compress">Compress</a></li>
+								<li><a href="#Encrypt">Encrypt</a></li>
+								<li><a href="#Decrypt">Decrypt</a></li>
+								<!--<li><a href="#elements">Elements</a></li>-->
+							</ul>
+						</nav>
+					</header>
+
+				<!-- Main -->
+					<div id="main">
+                        
+                        <!-- Login -->
+							<article id="Login">
+                                    <h2 class="major">Login</h2>
+                                    <form action="{{ url_for('login') }}" method="post" name="login">
+                                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                                        <div class="field half first">
+                                            <label for="username">Username</label>
+                                            <input type="text" name="username" id="login_username" />
+                                        </div>
+                                        <div class="field half">
+                                            <label for="password">Password</label>
+                                            <input type="password" name="password" id="login_password" />
+                                        </div>
+                                        <ul class="actions">
+                                            <li><input type="submit" value="Login" class="special" /></li>
+                                            <li><a href="#Signup">Signup</a></li>
+                                        </ul>
+                                    </form>
+                                </article>
+                        
+                        <!-- Signup -->
+							<article id="Signup">
+                                    <h2 class="major">Signup</h2>
+                                    <form action= "{{ url_for('signup') }}" method="post" name="signup">
+                                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                                        <div class="field half first">
+                                            <label for="username">Username</label>
+                                            <input type="text" name="username" id="signup_username" />
+                                        </div>
+                                        <div class="field half">
+                                                <label for="password">Password</label>
+                                                <input type="password" name="password" id="signup_password" />
+                                        </div>
+                                        <div class="field">
+                                                <label for="email">email</label>
+                                                <input type="text" name="email" id="email" />
+                                            </div>
+                                        <ul class="actions">
+                                            <li><input type="submit" value="Signup" class="special" /></li>
+                                            <li><a href="#Login">Login</a></li>
+                                        </ul>
+                                    </form>
+                                </article>
+                        
+						<!-- Merge -->
+						<article id="Merge">
+                            <h2 class="major">Merge PDF</h2>
+                            <p><b>Drop your PDFs in order and we'll do everthing else!</b></p>
+                            {{ dropzone.create(action=url_for('upload',func='merge',pageid=pageid)) }}
+                            <ul class="actions">  
+                                <li><a href="{{ url_for('preproc',func='merge',pageid=pageid) }}" class="button special">Merge!</a></li>           
+                            </ul>
+						</article>
+
+                        <!-- split -->
+						<article id="Split">
+                        {% if current_user.is_authenticated %}
+                        {% if current_user.confirmed %}
+                            <h2 class="major">Split PDF</h2>
+                            <p><b>Drop your PDF and we'll do everthing else!</b></p>
+                            {{ dropzone.create(action=url_for('upload',func='split',pageid=pageid)) }}
+                            <ul class="actions">  
+                                <li><a href="{{ url_for('preproc',func='splitpdf',pageid=pageid) }}" class="button special">Split To pdf!</a></li>
+                                <li><a href="{{ url_for('preproc',func='splitimg',pageid=pageid) }}" class="button special">Split To Image!</a></li>           
+                            </ul>
+                            {% else %}
+                            <h2 class="major">Please confirm your email</h2>
+                            <p><a href="{{ url_for('index') }} ">Homepage</a></p>
+                            <p><a href="{{ url_for('resendemail') }} ">Resend email</a></p>
+                            {% endif %}
+                            {% else %}
+                            <h2 class="major">Login required</h2>
+                            <p><a href="#Login">Login</a></p> <p><a href="#Signup">Signup</a></p> 
+                            {% endif %}
+                        </article>
+
+						<!-- Img2PDF -->
+						<article id="Img2PDF">
+                        {% if current_user.is_authenticated %}
+                            {% if current_user.confirmed %}
+                                <h2 class="major">Images to PDF</h2>
+                                <p><b>Drop your Images in order and we'll do everthing else!</b></p>
+                                {{ dropzone.create(action=url_for('upload',func='img2pdf',pageid=pageid)) }}
+                                <form action="{{ url_for('preproc',func='img2pdf',pageid=pageid) }}" method="post" name="upload" enctype="multipart/form-data">
+                                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                                    <ul class="actions"> 
+                                        <p>
+                                        <input type="checkbox" id="img2pdf_letter" name="letter" checked>
+                                        <label for="img2pdf_letter">fit page size</label>
+                                        </p>
+                                        <li><input type="submit" value="Convert!" class="special" /></li>
+                                    </ul>
+                                </form>
+                            {% else %}
+								<h2 class="major">Please confirm your email</h2>
+								<p><a href="{{ url_for('index') }} ">Homepage</a></p>
+								<p><a href="{{ url_for('resendemail') }} ">Resend email</a></p>
+                            {% endif %}
+                        {% else %}
+                            <h2 class="major">Login required</h2>
+                            <p><a href="#Login">Login</a></p> <p><a href="#Signup">Signup</a></p> 
+                        {% endif %}
+                        </article>
+
+						<!-- Addimg -->
+						<article id="Addimg">
+                        {% if current_user.is_authenticated %}
+							{% if current_user.confirmed %}
+                                <h2 class="major">Append images to PDF</h2>
+                                <p><b>Drop your files in order and we'll do everthing else!</b></p>
+                                {{ dropzone.create(action=url_for('upload',func='addimg',pageid=pageid)) }}
+                                <form action="{{ url_for('preproc',func='addimg',pageid=pageid) }}" method="post" name="upload" enctype="multipart/form-data">
+                                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                                    <ul class="actions"> 
+                                        <p>
+                                        <input type="checkbox" id="addimg_letter" name="letter" checked>
+                                        <label for="addimg_letter">fit page size</label>
+                                        </p>
+                                        <li><input type="submit" value="Add images!" class="special" /></li>
+                                    </ul>
+                                </form>
+                                
+                            {% else %}
+								<h2 class="major">Please confirm your email</h2>
+								<p><a href="{{ url_for('index') }} ">Homepage</a></p>
+								<p><a href="{{ url_for('resendemail') }} ">Resend email</a></p>
+							{% endif %}
+                        {% else %}
+                            <h2 class="major">Login required</h2>
+                            <p><a href="#Login">Login</a></p> <p><a href="#Signup">Signup</a></p> 
+                        {% endif %}
+                        </article>
+						
+						<!-- Compress -->
+						<article id="Compress">
+                        {% if current_user.is_authenticated %}
+							{% if current_user.confirmed %}
+                                <h2 class="major">Compress PDF</h2>
+                                <p><b>Drop your PDF and we'll do everthing else!</b></p>
+                                {{ dropzone.create(action=url_for('upload',func='compress',pageid=pageid)) }}
+                                <ul class="actions">  
+                                    <li><a href="{{ url_for('preproc',func='compress',pageid=pageid) }}" class="button special">Compress!</a></li>           
+                                </ul>
+                            {% else %}
+								<h2 class="major">Please confirm your email</h2>
+								<p><a href="{{ url_for('index') }} ">Homepage</a></p>
+								<p><a href="{{ url_for('resendemail') }} ">Resend email</a></p>
+							{% endif %}
+                        {% else %}
+                            <h2 class="major">Login required</h2>
+                            <p><a href="#Login">Login</a></p> <p><a href="#Signup">Signup</a></p> 
+                            {% endif %}
+                        </article>
+						
+						<!-- Encrypt -->
+						<article id="Encrypt">
+                        {% if current_user.is_authenticated %}
+							{% if current_user.confirmed %}
+                                <h2 class="major">Encrypt PDF</h2>
+                                <p><b>Drop your PDF with password and we'll do everthing else!</b></p>
+                                {{ dropzone.create(action=url_for('upload',func='encrypt',pageid=pageid)) }}
+                                <form action="{{ url_for('preproc',func='encrypt',pageid=pageid) }}" method="post" name="upload" enctype="multipart/form-data">
+                                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                                    <div class="field half first">
+										<label for="userpassword">User password</label>
+										<input type="text" name="userpassword" id="encrypt_userpassword" />
+									</div>
+									<div class="field half first">
+											<label for="ownerpassword">Owner password</label>
+											<input type="text" name="ownerpassword" id="encrypt_ownerpassword" />
+									</div>
+                                    <ul class="actions"> 
+                                        <li><input type="submit" value="Encrypt!" class="special" /></li>
+                                    </ul>
+                                </form>
+                            {% else %}
+								<h2 class="major">Please confirm your email</h2>
+								<p><a href="{{ url_for('index') }} ">Homepage</a></p>
+								<p><a href="{{ url_for('resendemail') }} ">Resend email</a></p>
+							{% endif %}
+                        {% else %}
+                                <h2 class="major">Login required</h2>
+                                <p><a href="#Login">Login</a></p> <p><a href="#Signup">Signup</a></p> 
+                        {% endif %}
+						</article>
+							
+						<!-- Decrypt -->
+						<article id="Decrypt">
+                        {% if current_user.is_authenticated %}
+							{% if current_user.confirmed %}
+                                <h2 class="major">Decrypt PDF</h2>
+                                <p><b>Drop your PDF with password and we'll do everthing else!</b></p>
+                                {{ dropzone.create(action=url_for('upload',func='decrypt',pageid=pageid)) }}
+                                <form action="{{ url_for('preproc',func='decrypt',pageid=pageid) }}" method="post" name="upload" enctype="multipart/form-data">
+									<input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+									<div class="field">
+										<label for="password">Password</label>
+										<input type="text" name="password" id="decrypt_password" />
+									</div>
+                                    <ul class="actions">
+                                        <li><input type="submit" value="Decrypt!" class="special" /></li>
+                                    </ul>
+                                </form>
+                            {% else %}
+								<h2 class="major">Please confirm your email</h2>
+								<p><a href="{{ url_for('index') }} ">Homepage</a></p>
+								<p><a href="{{ url_for('resendemail') }} ">Resend email</a></p>
+							{% endif %}
+                        {% else %}
+                                <h2 class="major">Login required</h2>
+                                <p><a href="#Login">Login</a></p> <p><a href="#Signup">Signup</a></p> 
+                        {% endif %}
+                        </article>
+
+                        <article id="About">
+                            <h2 class="major">About</h2>
+                            <h3>Usage</h3>
+                            <section>
+                                <p>For PDF operation, simply drag and drop files into the dropzone and click the majic button. The converted file will be ready at the download page. If you want to clear current files and select new ones, please refresh the page. </p>
+                                <p>Merge function is open to all users and other funtions are available only for rigistered users. All functions support multiple PDF files processing. If output files are more than one, they will be packed as a zip file.</p>
+                            </section>
+                            <h3>Credit</h3>
+                                <blockquote>This app is developed by Sirui Liao and Pengchong Wang, as the final project for E6770.</blockquote>
+                        </article>
+
+					</div>
+				<!-- Footer -->
+					<footer id="footer">
+						<p class="copyright"> Contact us: sl4402@columbia.edu</p><p class="copyright"><a href="#About">About</a></p>
+					</footer>
+			</div>
+		
+		<!-- BG -->
+			<div id="bg"></div>
+
+        <!-- Scripts -->
+            <script src="/static/js/dropzone.js"></script>
+            {{ dropzone.config(
+                custom_func="
+                accept: function(file, done){
+                    var thumbnail = $('.dropzone .dz-preview.dz-file-preview .dz-image:last');
+                    switch (file.type) {
+                    case 'application/pdf':
+                        thumbnail.css('background', 'url(static/images/pdf.png)');
+                        break;
+                    }
+                    done();
+                }
+                ") }}
+            <script src="/static/js/jquery.min.js"></script>
+			<script src="/static/js/skel.min.js"></script>
+			<script src="/static/js/util.js"></script>
+            <script src="/static/js/main.js"></script>
+
+            
+	</body>
+</html>
