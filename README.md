@@ -56,7 +56,9 @@ python3 /path/to/pdfserver/runserver.py
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 In this mode we start a WSGI server and the log will be logged into 'infolog.log'
 
+## License
 
+This app is under GNU GPLv3 license, because the dependence PyMuPDF is distributed under GNU GPLv3 license.
  
 
 ## Structure
