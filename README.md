@@ -44,7 +44,7 @@ pip3 install -r requirements.txt
 For development and test, run
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-python3 /path/to/pdfserver/pdfserver_auth.py
+python3 /path/to/pdfserver/pdfserver.py
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 This mode set Flask debug mode to True as default, such that Flask return html containing error information if internal error happen.
 Be caution not to use this mode in production environment for security and performance resons.
