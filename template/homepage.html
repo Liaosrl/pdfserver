@@ -281,7 +281,7 @@
         <!-- Scripts -->
             <script src="/static/js/dropzone.js"></script>
             {{ dropzone.config(
-                custom_func="
+                custom_options="
                 accept: function(file, done){
                     var thumbnail = $('.dropzone .dz-preview.dz-file-preview .dz-image:last');
                     switch (file.type) {
