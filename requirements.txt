@@ -1,0 +1,13 @@
+Werkzeug==0.14.1
+gevent==1.4.0
+Flask_Login==0.4.1
+Flask_Dropzone==1.5.4
+WTForms==2.2.1
+itsdangerous==1.1.0
+Flask_Mail==0.9.1
+Flask_WTF==0.14.2
+SQLAlchemy==1.2.18
+Flask_Uploads==0.2.1
+Flask_Bootstrap==3.3.7.1
+Flask==1.0.2
+pymupdf==1.16.7
