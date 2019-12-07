@@ -9,9 +9,9 @@
 		<title>PDFTOOL</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-        <link rel="stylesheet" href="/static/css/main.css" />
-        <link rel="stylesheet" href="/static/css/dropzone.css" />
-        <link rel="stylesheet" href="/static/css/modify-dropzone.css" />
+		<link rel="stylesheet" href="/static/css/main.css" />
+		<link rel="stylesheet" href="/static/css/dropzone.css" />
+		<link rel="stylesheet" href="/static/css/modify-dropzone.css" />
 		<noscript><link rel="stylesheet" href="/static/css/noscript.css" /></noscript>
 	</head>
 	<body>
@@ -279,23 +279,23 @@
 			<div id="bg"></div>
 
         <!-- Scripts -->
-            <script src="/static/js/dropzone.js"></script>
-            {{ dropzone.config(
-                custom_options="
-                accept: function(file, done){
-                    var thumbnail = $('.dropzone .dz-preview.dz-file-preview .dz-image:last');
-                    switch (file.type) {
-                    case 'application/pdf':
-                        thumbnail.css('background', 'url(static/images/pdf.png)');
-                        break;
-                    }
-                    done();
-                }
-                ") }}
-            <script src="/static/js/jquery.min.js"></script>
-			<script src="/static/js/skel.min.js"></script>
-			<script src="/static/js/util.js"></script>
-            <script src="/static/js/main.js"></script>
+		<script src="/static/js/dropzone.js"></script>
+		{{ dropzone.config(
+				custom_options="
+				accept: function(file, done){
+				    var thumbnail = $('.dropzone .dz-preview.dz-file-preview .dz-image:last');
+				    switch (file.type) {
+				    case 'application/pdf':
+					thumbnail.css('background', 'url(static/images/pdf.png)');
+					break;
+				    }
+				    done();
+				}
+				") }}
+            	<script src="/static/js/jquery.min.js"></script>
+		<script src="/static/js/skel.min.js"></script>
+		<script src="/static/js/util.js"></script>
+            	<script src="/static/js/main.js"></script>
 
             
 	</body>
