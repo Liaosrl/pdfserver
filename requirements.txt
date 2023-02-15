@@ -1,5 +1,5 @@
 Flask==1.1.1
-Werkzeug==0.16.0
+Werkzeug==2.2.3
 itsdangerous==1.1.0
 Flask_Dropzone==1.5.4
 fitz==0.0.1.dev2
